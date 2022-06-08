@@ -14,8 +14,11 @@ const responseRoute = require("./routes/response");
 const tokenRoute = require("./routes/token");
 const fetch = require("node-fetch");
 
+const mongoose = require("mongoose");
+
 var app = express();
 
+app.use(express.urlencoded({ extended: false }));
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "jade");
@@ -37,6 +40,19 @@ app.use("/token", tokenRoute);
 app.use(function (req, res, next) {
   next(createError(404));
 });
+
+const dbUrl =
+  "mongodb+srv://idoc_admin:idoc_pass@idoctest.mglvq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+
+const connectionParams = { useNewUrlParser: true, useUnifiedTopology: true };
+mongoose
+  .connect(dbUrl, connectionParams)
+  .then(() => {
+    console.info("connected to the DB");
+  })
+  .catch((e) => {
+    console.log("err:", e);
+  });
 
 // error handler
 app.use(function (err, req, res, next) {

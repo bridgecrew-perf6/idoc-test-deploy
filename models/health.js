@@ -5,7 +5,6 @@ const healthSchema = new mongoose.Schema(
     temperature: { type: Number, required: true, trim: true },
     pulse: { type: Number, required: true, trim: true },
     oxygen: { type: Number, required: true, trim: true },
-    weight: { type: Number, required: true, trim: true },
   },
   { timestamps: true }
 );

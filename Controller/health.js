@@ -5,7 +5,6 @@ exports.addHealth = async (req, res) => {
       temperature: req.body.temperature,
       pulse: req.body.pulse,
       oxygen: req.body.oxygen,
-      weight: req.body.weight,
     });
     const health = await newHealth.save();
     res.status(200).json({ sucess: true, data: health });
