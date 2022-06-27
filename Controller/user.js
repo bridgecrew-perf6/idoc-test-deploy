@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const Stock = require("../models/stocks");
 
 exports.testApi = async (req, res) => {
   try {
@@ -63,4 +64,23 @@ exports.userLogin = async (req, res) => {
     res.status(500).json({ sucess: false, err });
   }
 };
+
+exports.addStocks = async (req, res) => {
+  try {
+    const newStocks = new Stock({
+      stock_name: req.body.stock_name,
+      stock_category: req.body.stock_category,
+      stock_unit: req.body.stock_unit,
+      stock_type: req.body.stock_type,
+      company_name: req.body.company_name,
+      effect: req.body.effect,
+      expiry_date: req.body.expiry_date,
+    });
+    const stocks = await newStocks.save();
+    res.status(200).json({ sucess: true });
+  } catch (error) {
+    res.status(500).json({ sucess: false, error });
+  }
+};
+
 exports.loginUser = async (req, res) => {};
