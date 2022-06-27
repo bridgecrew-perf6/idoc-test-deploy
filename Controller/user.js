@@ -83,4 +83,13 @@ exports.addStocks = async (req, res) => {
   }
 };
 
+exports.showStocks = async (req, res) => {
+  try {
+    const stocksFromDB = await Stock.find();
+    res.status(200).json({ sucess: true, stocks: stocksFromDB });
+  } catch (error) {
+    res.status(500).json({ sucess: false, error });
+  }
+};
+
 exports.loginUser = async (req, res) => {};
