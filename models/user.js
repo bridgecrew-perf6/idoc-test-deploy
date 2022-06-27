@@ -5,18 +5,17 @@ const userSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
-  finger_id: {
-    type: String,
-    required: true,
-    trim: true,
-  },
   user_name: {
     type: String,
     required: true,
     trim: true,
   },
-  user_number: {
+  user_password: {
     type: String,
+    required: true,
+  },
+  user_number: {
+    type: Number,
     required: true,
     trim: true,
   },
