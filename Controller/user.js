@@ -26,6 +26,15 @@ exports.addUser = async (req, res) => {
   }
 };
 
+exports.listUser = async (req, res) => {
+  try {
+    const userListFromDB = await User.find();
+    res.status(200).json({ sucess: true, users: userListFromDB });
+  } catch (error) {
+    res.status(500).json({ sucess: false, err });
+  }
+};
+
 // exports.usertest = async (req, res) => {
 //   try {
 //     const userDetails = await fetch(
