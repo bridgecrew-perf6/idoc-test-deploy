@@ -92,4 +92,17 @@ exports.showStocks = async (req, res) => {
   }
 };
 
+exports.searchStock = async (req, res) => {
+  console.log(req.params.key);
+  let data = await Stock.find({
+    $or: [
+      { stock_name: { $regex: req.params.key } },
+      { stock_category: { $regex: req.params.key } },
+      { company_name: { $regex: req.params.key } },
+      { effect: { $regex: req.params.key } },
+    ],
+  });
+  res.send(data);
+};
+
 exports.loginUser = async (req, res) => {};
