@@ -126,6 +126,7 @@ exports.addPatient = async (req, res) => {
       patient_number: req.body.patient_number,
       patient_mail: req.body.patient_mail,
       patient_age: req.body.patient_age,
+      active_token: false,
       patient_address: req.body.patient_address,
       // patient_health: req.body.patient_health,
     });
@@ -137,7 +138,7 @@ exports.addPatient = async (req, res) => {
 };
 exports.getPatient = async (req, res) => {
   try {
-    const patientDetails = await Patient.find();
+    const patientDetails = await Patient.find({ active_token: true });
     res.status(200).json({ sucess: true, Patient: patientDetails });
   } catch (error) {
     res.status(500).json({ sucess: false, error });
@@ -182,6 +183,7 @@ exports.newToken = async (req, res) => {
         {
           // $push: { patient_health: sampleObj },
           patient_health: sampleObj,
+          active_token: true,
         }
       );
     }

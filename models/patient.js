@@ -28,6 +28,9 @@ const patientSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  active_token: {
+    type: Boolean,
+  },
   patient_health: {
     token_no: {
       type: String,
