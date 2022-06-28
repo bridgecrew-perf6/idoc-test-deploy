@@ -1,5 +1,8 @@
 const User = require("../models/user");
 const Stock = require("../models/stocks");
+const Patient = require("../models/patient");
+const fs = require("fs");
+const { token } = require("morgan");
 
 exports.testApi = async (req, res) => {
   try {
@@ -112,6 +115,79 @@ exports.searchStock = async (req, res) => {
     ],
   });
   res.send(data);
+};
+
+exports.addPatient = async (req, res) => {
+  try {
+    const newPatient = new Patient({
+      patient_id: req.body.patient_id,
+      patient_name: req.body.patient_name,
+      patient_finger: req.body.patient_finger,
+      patient_number: req.body.patient_number,
+      patient_mail: req.body.patient_mail,
+      patient_age: req.body.patient_age,
+      patient_address: req.body.patient_address,
+      patient_health: req.body.patient_health,
+    });
+    const user = await newPatient.save();
+    res.status(200).json({ sucess: true });
+  } catch (error) {
+    res.status(500).json({ sucess: false, error });
+  }
+};
+exports.getPatient = async (req, res) => {
+  try {
+    const patientDetails = await Patient.find();
+    res.status(200).json({ sucess: true, Patient: patientDetails });
+  } catch (error) {
+    res.status(500).json({ sucess: false, error });
+  }
+};
+exports.newToken = async (req, res) => {
+  try {
+    let globalToken;
+    fs.readFile("token.txt", "utf8", (err, data) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      let token = data;
+      token++;
+      console.log(token);
+      addNewToken(token.toString());
+    });
+    async function addNewToken(token) {
+      globalToken = await token.toString();
+      console.log(globalToken);
+      fs.writeFile("token.txt", token, function (err) {
+        if (err) {
+          return console.log(err);
+        }
+        console.log("The file was saved!");
+      });
+
+      const update = req.body;
+      const finger_id = req.body.patient_finger;
+      const sampleObj = {
+        token_no: globalToken,
+        temperature: req.body.temperature,
+        pulse_rate: req.body.pulse_rate,
+        oxygen_rate: req.body.oxygen_rate,
+      };
+
+      console.log(sampleObj);
+      const result = await Patient.update(
+        { patient_finger: finger_id },
+        {
+          $push: { patient_health: sampleObj },
+        }
+      );
+    }
+
+    res.status(200).json({ sucess: true });
+  } catch (error) {
+    res.status(500).json({ sucess: false, error });
+  }
 };
 
 exports.loginUser = async (req, res) => {};

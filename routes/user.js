@@ -7,6 +7,9 @@ const {
   showStocks,
   searchStock,
   listUser,
+  addPatient,
+  newToken,
+  getPatient,
 } = require("../Controller/user");
 const router = express.Router();
 
@@ -17,5 +20,8 @@ router.route("/signin").post(userLogin);
 router.route("/stocks/add").post(addStocks);
 router.route("/stocks").get(showStocks);
 router.route("/stocks/search/:key").get(searchStock);
+router.route("/patient/signup").post(addPatient);
+router.route("/patient/token").post(newToken);
+router.route("/patient").get(getPatient);
 
 module.exports = router;
