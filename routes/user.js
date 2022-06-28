@@ -26,6 +26,6 @@ router.route("/patient/signup").post(addPatient);
 router.route("/patient/token").post(newToken);
 router.route("/patient").get(getPatient);
 router.route("/doctor/newPrescription").post(addPrescription);
-router.route("/pharmacy/view").post(getPrescription);
+router.route("/pharmacy/view").get(getPrescription);
 
 module.exports = router;
