@@ -127,7 +127,7 @@ exports.addPatient = async (req, res) => {
       patient_mail: req.body.patient_mail,
       patient_age: req.body.patient_age,
       patient_address: req.body.patient_address,
-      patient_health: req.body.patient_health,
+      // patient_health: req.body.patient_health,
     });
     const user = await newPatient.save();
     res.status(200).json({ sucess: true });
@@ -173,13 +173,15 @@ exports.newToken = async (req, res) => {
         temperature: req.body.temperature,
         pulse_rate: req.body.pulse_rate,
         oxygen_rate: req.body.oxygen_rate,
+        active: true,
       };
 
       console.log(sampleObj);
       const result = await Patient.update(
         { patient_finger: finger_id },
         {
-          $push: { patient_health: sampleObj },
+          // $push: { patient_health: sampleObj },
+          patient_health: sampleObj,
         }
       );
     }

@@ -28,18 +28,38 @@ const patientSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  patient_health: [
-    {
-      token_no: String,
-      token_date: {
-        type: Date,
-        default: Date.now,
-      },
-      temperature: Number,
-      pulse_rate: Number,
-      oxygen_rate: Number,
+  patient_health: {
+    token_no: {
+      type: String,
     },
-  ],
+    token_date: {
+      type: Date,
+      default: Date.now,
+    },
+    temperature: {
+      type: String,
+    },
+    pulse_rate: {
+      type: String,
+    },
+    oxygen_rate: {
+      type: String,
+    },
+    active: {
+      type: Boolean,
+    },
+  },
+  // {
+  //   token_no: String,
+  //   token_date: {
+  //     type: Date,
+  //     default: Date.now,
+  //   },
+  //   temperature: Number,
+  //   pulse_rate: Number,
+  //   oxygen_rate: Number,
+  //   active: Boolean,
+  // },
 });
 
 const PatientModel = mongoose.model("patient", patientSchema);
