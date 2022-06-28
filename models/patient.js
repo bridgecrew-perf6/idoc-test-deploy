@@ -31,23 +31,23 @@ const patientSchema = new mongoose.Schema({
   active_token: {
     type: Boolean,
   },
+  token_no: {
+    type: String,
+  },
+  token_date: {
+    type: Date,
+    default: Date.now,
+  },
+  temperature: {
+    type: String,
+  },
+  pulse_rate: {
+    type: String,
+  },
+  oxygen_rate: {
+    type: String,
+  },
   patient_health: {
-    token_no: {
-      type: String,
-    },
-    token_date: {
-      type: Date,
-      default: Date.now,
-    },
-    temperature: {
-      type: String,
-    },
-    pulse_rate: {
-      type: String,
-    },
-    oxygen_rate: {
-      type: String,
-    },
     active: {
       type: Boolean,
     },

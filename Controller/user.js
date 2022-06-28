@@ -3,6 +3,7 @@ const Stock = require("../models/stocks");
 const Patient = require("../models/patient");
 const fs = require("fs");
 const { token } = require("morgan");
+const Prescription = require("../models/prescription");
 
 exports.testApi = async (req, res) => {
   try {
@@ -144,6 +145,7 @@ exports.getPatient = async (req, res) => {
     res.status(500).json({ sucess: false, error });
   }
 };
+
 exports.newToken = async (req, res) => {
   try {
     let globalToken;
@@ -182,13 +184,53 @@ exports.newToken = async (req, res) => {
         { patient_finger: finger_id },
         {
           // $push: { patient_health: sampleObj },
-          patient_health: sampleObj,
+          // patient_health: sampleObj,
+          token_no: globalToken,
+          temperature: req.body.temperature,
+          pulse_rate: req.body.pulse_rate,
+          oxygen_rate: req.body.oxygen_rate,
+          active: true,
           active_token: true,
         }
       );
     }
 
     res.status(200).json({ sucess: true });
+  } catch (error) {
+    res.status(500).json({ sucess: false, error });
+  }
+};
+
+exports.addPrescription = async (req, res) => {
+  try {
+    const newPrescrip = new Prescription({
+      patient_id: req.body.patient_id,
+      patient_age: req.body.patient_age,
+      patient_name: req.body.patient_name,
+      token_no: req.body.token_no,
+      patient_age: req.body.patient_age,
+      temperature: req.body.temperature,
+      pulse_rate: req.body.pulse_rate,
+      doctor_name: req.body.doctor_name,
+      final_diagnosis: req.body.final_diagnosis,
+      drug_name: req.body.drug_name,
+      frequency: req.body.frequency,
+      duration: req.body.duration,
+      time: req.body.time,
+      remarks: req.body.remarks,
+      status: true,
+    });
+    const prescription = await newPrescrip.save();
+    res.status(200).json({ sucess: true });
+  } catch (error) {
+    res.status(500).json({ sucess: false, error });
+  }
+};
+
+exports.getPrescription = async (req, res) => {
+  try {
+    const prescripDetails = await Prescription.find({ status: true });
+    res.status(200).json({ sucess: true, prescripDetails });
   } catch (error) {
     res.status(500).json({ sucess: false, error });
   }
