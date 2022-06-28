@@ -105,6 +105,20 @@ exports.showStocks = async (req, res) => {
   }
 };
 
+exports.showStockName = async (req, res) => {
+  const stock = [];
+  var i = 0;
+  try {
+    const stocksName = await Stock.find({}).select("stock_name");
+    for (i = 0; i < stocksName.length; i++) {
+      stock.push(stocksName[i].stock_name);
+    }
+    res.status(200).json(stock);
+  } catch (error) {
+    res.status(500).json({ sucess: false, error });
+  }
+};
+
 exports.searchStock = async (req, res) => {
   console.log(req.params.key);
   let data = await Stock.find({
