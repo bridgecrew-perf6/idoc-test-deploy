@@ -13,6 +13,8 @@ const {
   addPrescription,
   getPrescription,
   showStockName,
+  editTokenStatus,
+  editPriscribStatus,
 } = require("../Controller/user");
 const router = express.Router();
 
@@ -29,5 +31,7 @@ router.route("/patient/token").post(newToken);
 router.route("/patient").get(getPatient);
 router.route("/doctor/newPrescription").post(addPrescription);
 router.route("/pharmacy/view").get(getPrescription);
+router.route("/patient/tokenchange").post(editTokenStatus);
+router.route("/pharmacy/statuschange").post(editPriscribStatus);
 
 module.exports = router;

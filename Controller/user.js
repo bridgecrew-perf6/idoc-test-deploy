@@ -215,6 +215,36 @@ exports.newToken = async (req, res) => {
   }
 };
 
+exports.editTokenStatus = async (req, res) => {
+  try {
+    var objId = req.body._id;
+    const result = await Patient.updateOne(
+      { _id: objId },
+      {
+        active_token: false,
+      }
+    );
+    res.status(200).json({ sucess: true });
+  } catch (error) {
+    res.status(500).json({ sucess: false, error });
+  }
+};
+
+exports.editPriscribStatus = async (req, res) => {
+  try {
+    var objId = req.body._id;
+    const result = await Prescription.updateOne(
+      { _id: objId },
+      {
+        status: false,
+      }
+    );
+    res.status(200).json({ sucess: true });
+  } catch (error) {
+    res.status(500).json({ sucess: false, error });
+  }
+};
+
 exports.addPrescription = async (req, res) => {
   try {
     const newPrescrip = new Prescription({
