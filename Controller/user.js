@@ -266,6 +266,16 @@ exports.editPriscribStatus = async (req, res) => {
   }
 };
 
+exports.getMedicineOnly = async (req, res) => {
+  try {
+    var objId = req.body.patient_id;
+    console.log(objId);
+    const result = await Prescription.find({ patient_id: objId });
+    res.status(200).json({ sucess: true, result });
+  } catch (error) {
+    res.status(500).json({ sucess: false, error });
+  }
+};
 exports.addPrescription = async (req, res) => {
   try {
     let medicines = {
