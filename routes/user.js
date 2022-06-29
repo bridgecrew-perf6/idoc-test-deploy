@@ -15,6 +15,7 @@ const {
   showStockName,
   editTokenStatus,
   editPriscribStatus,
+  getMultipleCount,
 } = require("../Controller/user");
 const router = express.Router();
 
@@ -33,5 +34,6 @@ router.route("/doctor/newPrescription").post(addPrescription);
 router.route("/pharmacy/view").get(getPrescription);
 router.route("/patient/tokenchange").post(editTokenStatus);
 router.route("/pharmacy/statuschange").post(editPriscribStatus);
+router.route("/dash/count").get(getMultipleCount);
 
 module.exports = router;

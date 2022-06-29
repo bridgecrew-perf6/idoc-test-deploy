@@ -59,6 +59,7 @@ exports.userLogin = async (req, res) => {
       user_mail: details.user_mail,
       user_password: details.user_password,
     });
+
     console.log("user from database", userFromDatabase);
     // console.log("*****************************");
     //console.log(user);
@@ -75,6 +76,22 @@ exports.userLogin = async (req, res) => {
     });
   } catch (err) {
     res.status(500).json({ sucess: false, err });
+  }
+};
+
+exports.getMultipleCount = async (req, res) => {
+  try {
+    const patientDetails = await Patient.find({ active_token: true });
+    var patientCount = patientDetails.length;
+    const doctorDetails = await User.find({ user_role: "doctor" });
+    console.log(doctorDetails.length);
+    doctorCount = doctorDetails.length;
+    // console.log(patientDetails.length);
+    res
+      .status(200)
+      .json({ sucess: true, patients: patientCount, doctors: doctorCount });
+  } catch (error) {
+    res.status(500).json({ sucess: false, error });
   }
 };
 
@@ -154,7 +171,11 @@ exports.addPatient = async (req, res) => {
 exports.getPatient = async (req, res) => {
   try {
     const patientDetails = await Patient.find({ active_token: true });
-    res.status(200).json({ sucess: true, Patient: patientDetails });
+    var count = patientDetails.length;
+    // console.log(patientDetails.length);
+    res
+      .status(200)
+      .json({ sucess: true, Patient: patientDetails, patientCount: count });
   } catch (error) {
     res.status(500).json({ sucess: false, error });
   }
@@ -288,6 +309,7 @@ exports.addPrescription = async (req, res) => {
 exports.getPrescription = async (req, res) => {
   try {
     const prescripDetails = await Prescription.find({ status: true });
+    console.log();
     res.status(200).json({ sucess: true, prescripDetails });
   } catch (error) {
     res.status(500).json({ sucess: false, error });
