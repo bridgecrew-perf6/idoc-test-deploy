@@ -15,10 +15,6 @@ const prescriptionSchema = new mongoose.Schema({
   token_no: {
     type: String,
   },
-  patient_age: {
-    type: Number,
-    required: true,
-  },
   temperature: {
     type: String,
   },
@@ -51,6 +47,29 @@ const prescriptionSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  medicines: [
+    {
+      slno: {
+        type: String,
+      },
+      drug_name: {
+        type: String,
+      },
+      frequency: {
+        type: String,
+      },
+      duration: {
+        type: String,
+      },
+      time: {
+        type: String,
+      },
+      remarks: {
+        type: String,
+        default: "No remarks",
+      },
+    },
+  ],
 });
 
 const PrescriptionModel = mongoose.model("prescription", prescriptionSchema);

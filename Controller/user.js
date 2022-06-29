@@ -247,12 +247,15 @@ exports.editPriscribStatus = async (req, res) => {
 
 exports.addPrescription = async (req, res) => {
   try {
+    let medicines = {
+      slno: req.body.slno,
+    };
+    console.log(medicines);
     const newPrescrip = new Prescription({
       patient_id: req.body.patient_id,
       patient_age: req.body.patient_age,
       patient_name: req.body.patient_name,
       token_no: req.body.token_no,
-      patient_age: req.body.patient_age,
       temperature: req.body.temperature,
       pulse_rate: req.body.pulse_rate,
       doctor_name: req.body.doctor_name,
@@ -262,6 +265,17 @@ exports.addPrescription = async (req, res) => {
       duration: req.body.duration,
       time: req.body.time,
       remarks: req.body.remarks,
+      // medicines: [
+      //   {
+      //     slno: req.body.slno,
+      //     drug_name: req.body.drug_name,
+      //     frequency: req.body.frequency,
+      //     duration: req.body.duration,
+      //     time: req.body.time,
+      //     remarks: req.body.remarks,
+      //   },
+      // ],
+      medicines: req.body.medicines,
       status: true,
     });
     const prescription = await newPrescrip.save();
